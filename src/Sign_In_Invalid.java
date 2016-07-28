@@ -14,9 +14,6 @@ public class Sign_In_Invalid {
         if (webDriver.getCurrentUrl().equalsIgnoreCase("http://versionhistory.demo.zerp.info/admin/eee/projects")) {
             System.out.println("Empty Email Login Test: fail!");
         } else if (webDriver.getCurrentUrl().equalsIgnoreCase("http://versionhistory.demo.zerp.info/login")) {
-            new WebDriverWait(webDriver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")));
-//            new WebDriverWait(webDriver, 3).until(ExpectedConditions.alertIsPresent());
-//            webDriver.switchTo().alert().accept();
             webDriver.findElement(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")).click();
             System.out.println("Empty Email Login Test: success");
         }

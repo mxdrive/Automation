@@ -25,16 +25,10 @@ public class Registration_negative {
     @org.testng.annotations.Test
     public void noEmail() {
 
-        WebElement element1 = webDriver.findElement(By.id("username_signup"));
-        element1.sendKeys("Company_000");
-        WebElement element2 = webDriver.findElement(By.id("password_signup"));
-        element2.sendKeys("123123123");
-        WebElement element3 = webDriver.findElement(By.id("password_confirmation"));
-        element3.sendKeys("123123123");
-        element3.submit();
-//        WebElement element4 = webDriver.findElement(By.xpath(".//*[@id='pricing_plan']/option[3]"));
-//        element4.click();
-//        webDriver.findElement(By.className("btn")).click();
+        webDriver.findElement(By.id("username_signup")).sendKeys("Company_000");
+        webDriver.findElement(By.id("password_signup")).sendKeys("123123123");
+        webDriver.findElement(By.id("password_confirmation")).sendKeys("123123123");
+        webDriver.findElement(By.id("password_confirmation")).submit();
         new WebDriverWait(webDriver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")));
         webDriver.findElement(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")).click();
         if (webDriver.getCurrentUrl().equalsIgnoreCase("http://versionhistory.demo.zerp.info/login")) {
@@ -64,14 +58,10 @@ public class Registration_negative {
     @org.testng.annotations.Test
     public void noCompany() {
 
-        WebElement element = webDriver.findElement(By.id("email_signup"));
-        element.sendKeys("user@user1r1111.user");
-        WebElement element2 = webDriver.findElement(By.id("password_signup"));
-        element2.sendKeys("123123123");
-        WebElement element3 = webDriver.findElement(By.id("password_confirmation"));
-        element3.sendKeys("123123123");
-        WebElement element4 = webDriver.findElement(By.xpath(".//*[@id='pricing_plan']/option[3]"));
-        element4.click();
+        webDriver.findElement(By.id("email_signup")).sendKeys("user@user1r1111.user");
+        webDriver.findElement(By.id("password_signup")).sendKeys("123123123");
+        webDriver.findElement(By.id("password_confirmation")).sendKeys("123123123");
+        webDriver.findElement(By.xpath(".//*[@id='pricing_plan']/option[3]")).click();
         webDriver.findElement(By.className("btn")).click();
         new WebDriverWait(webDriver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")));
         webDriver.findElement(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")).click();
@@ -109,12 +99,9 @@ public class Registration_negative {
             webDriver.findElement(By.id("email_signup")).sendKeys("us" + list.get(i) + "er@us.er");
 //            element.sendKeys("us" + list.get(i) + "er@us.er");
             webDriver.findElement(By.id("username_signup")).sendKeys("Comp" + list1.get(i) + "Name");
-            WebElement element2 = webDriver.findElement(By.id("password_signup"));
-            element2.sendKeys("123123123");
-            WebElement element3 = webDriver.findElement(By.id("password_confirmation"));
-            element3.sendKeys("123123123");
-            WebElement element4 = webDriver.findElement(By.xpath(".//*[@id='pricing_plan']/option[3]"));
-            element4.click();
+            webDriver.findElement(By.id("password_signup")).sendKeys("123123123");
+            webDriver.findElement(By.id("password_confirmation")).sendKeys("123123123");
+            webDriver.findElement(By.xpath(".//*[@id='pricing_plan']/option[3]")).click();
             webDriver.findElement(By.className("btn")).click();
 //            try {
 //                Thread.sleep(5000);
