@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Login/Registration Test Suite">
+
+    <test name="Registration Positive Test">
+        <classes>
+            <class name="Registration_positive" />
+        </classes>
+    </test>
+
+    <test name="Registration Negative Test">
+        <classes>
+            <class name="Registration_negative" />
+        </classes>
+    </test>
+
+    <test name="Log In/Log Out Positive Test">
+        <classes>
+            <class name="Login_logout_positive" />
+        </classes>
+    </test>
+
+    <test name="Log In Negative Test">
+        <classes>
+            <class name="Sign_In_Invalid" />
+        </classes>
+    </test>
+
+</suite>
