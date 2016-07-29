@@ -7,18 +7,37 @@ import org.testng.annotations.AfterTest;
 
 public class Login_logout_positive {
     WebDriver webDriver = new WebDriverInit().getWebDriver();
+    int min = 0;
+    int max = 9999;
 
     @org.testng.annotations.Test
     public void login () {
 
+        int random = min + (int)(Math.random() * ((max - min) + 1));
+
+        //registration
+        webDriver.get("http://versionhistory.demo.zerp.info/login");
+        webDriver.findElement(By.id("email_signup")).sendKeys("user@us" + random + "er.user");
+        webDriver.findElement(By.id("username_signup")).sendKeys("Company" + random);
+        webDriver.findElement(By.id("password_signup")).sendKeys("123123123");
+        webDriver.findElement(By.id("password_confirmation")).sendKeys("123123123");
+        webDriver.findElement(By.className("btn")).click();
+        if (webDriver.getCurrentUrl().equalsIgnoreCase("http://versionhistory.demo.zerp.info/admin/company" + random + "/projects")) {
+            webDriver.findElement(By.xpath(".//*[@id='container']/header/div/div/div/ul/li[4]/a")).click();
+        } else if (webDriver.getCurrentUrl().equalsIgnoreCase("http://versionhistory.demo.zerp.info/login")) {
+            System.out.println("Registration: fail - User exists");
+            new WebDriverWait(webDriver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")));
+            webDriver.findElement(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")).click();
+        }
+
         WebElement element = webDriver.findElement(By.id("email_signin"));
-        element.sendKeys("user@user11.user");
+        element.sendKeys("user@us" + random + "er.user");
         WebElement element1 = webDriver.findElement(By.id("password_signin"));
         element1.sendKeys("123123123");
         WebElement element2 = webDriver.findElement(By.name("remember"));
         element2.click();
         element2.submit();
-        if (webDriver.getCurrentUrl().equalsIgnoreCase("http://versionhistory.demo.zerp.info/admin/company_0/projects")) {
+        if (webDriver.getCurrentUrl().equalsIgnoreCase("http://versionhistory.demo.zerp.info/admin/company" + random + "/projects")) {
             System.out.println("Login Test: success");
         }
     }
