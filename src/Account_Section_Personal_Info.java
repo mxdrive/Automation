@@ -115,8 +115,8 @@ public class Account_Section_Personal_Info {
             }
             if (webDriver.findElement(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")).isEnabled()) {
                 webDriver.findElement(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")).click();
-            } else {
-                continue;
+            } else if (webDriver.findElement(By.cssSelector("input:invalid")).isEnabled()){
+                webDriver.findElement(By.xpath(".//*[@id='p_password']")).click();
             }
             webDriver.findElement(By.xpath(".//*[@id='p_password']")).sendKeys("123123123");
             webDriver.findElement(By.xpath(".//*[@id='p_password_confirmation']")).sendKeys("123123123");
