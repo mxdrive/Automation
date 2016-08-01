@@ -29,12 +29,14 @@ public class Registration_positive {
             }
             webDriver.findElement(By.className("btn")).click();
             if (webDriver.getCurrentUrl().equalsIgnoreCase("http://versionhistory.demo.zerp.info/admin/company" + random + "/projects")) {
-                System.out.println("Registration: success - Pricing Plan Option " + (i + 1));
+                System.out.println("Registration Positive Test: success - Pricing Plan Option " + (i + 1));
                 webDriver.findElement(By.xpath(".//*[@id='container']/header/div/div/div/ul/li[4]/a")).click();
             } else if (webDriver.getCurrentUrl().equalsIgnoreCase("http://versionhistory.demo.zerp.info/login")) {
-                System.out.println("Registration: fail - User exists - Pricing Plan Option " + (i + 1));
+                System.out.println("Registration Positive Test: fail - User exists - Pricing Plan Option " + (i + 1));
                 new WebDriverWait(webDriver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")));
                 webDriver.findElement(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")).click();
+            } else {
+                System.out.println("Registration Positive Test: server error - Pricing Plan Option " + (i + 1));
             }
         }
 //        webDriver.close();

@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -86,6 +87,8 @@ public class Registration_negative {
                     webDriver.findElement(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")).click();
                 } else if (webDriver.getCurrentUrl().equalsIgnoreCase("http://versionhistory.demo.zerp.info/admin/comp" + random + "name/projects")) {
                     System.out.println("Not An Email Registration Test: fail! - Pricing Plan Option " + (i + 1));
+                } else {
+                    System.out.println("Not An Email Registration Test: server error - Pricing Plan Option " + (i + 1));
                 }
             } catch (Exception ignored) {}
         }
@@ -168,11 +171,7 @@ public class Registration_negative {
                     webDriver.findElement(By.xpath(".//*[@id='pricing_plan']/option[3]")).click();
                 }
                 webDriver.findElement(By.className("btn")).click();
-    //            try {
-    //                Thread.sleep(5000);
-    //            } catch (InterruptedException e) {
-    //                e.printStackTrace();
-    //            }
+
                 if (webDriver.getCurrentUrl().equalsIgnoreCase("http://versionhistory.demo.zerp.info/admin/comp" + random + "name/projects")) {
                     System.out.println("Deprecated Symbols " + list.get(j) + " Registration Test: fail (registration successful) - Pricing Plan Option " + (i + 1));
                     webDriver.findElement(By.xpath(".//*[@id='container']/header/div/div/div/ul/li[4]/a")).click();
@@ -201,10 +200,42 @@ public class Registration_negative {
                         System.out.println("Deprecated Symbol " + list.get(j) + " Registration Test: success - The name has already been taken - Pricing Plan Option " + (i + 1));
                     }
                     webDriver.get("http://versionhistory.demo.zerp.info/login");
+                } else {
+                    System.out.println("Registration Negative Test: server error - Pricing Plan Option " + (i + 1));
                 }
             }
         }
     }
+
+//    @org.testng.annotations.Test
+//    void emailFieldSizeMax() {
+//
+//        for (int i = 0; i <= 2; i++) {
+//            int random = min + (int)(Math.random() * ((max - min) + 1));
+//            webDriver.get("http://versionhistory.demo.zerp.info/login");
+//            webDriver.findElement(By.id("email_signup")).sendKeys( + random +"ser");
+//            webDriver.findElement(By.id("username_signup")).sendKeys("Comp" + random);
+//            webDriver.findElement(By.id("password_signup")).sendKeys("123123123");
+//            webDriver.findElement(By.id("password_confirmation")).sendKeys("123123123");
+//            if (i == 0) {
+//                webDriver.findElement(By.xpath(".//*[@id='pricing_plan']/option[1]")).click();
+//            } else if (i == 1) {
+//                webDriver.findElement(By.xpath(".//*[@id='pricing_plan']/option[2]")).click();
+//            } else {
+//                webDriver.findElement(By.xpath(".//*[@id='pricing_plan']/option[3]")).click();
+//            }
+//            webDriver.findElement(By.id("password_confirmation")).submit();
+//            try {
+//                new WebDriverWait(webDriver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")));
+//                if (webDriver.findElement(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")).isDisplayed()) {
+//                    System.out.println("Not An Email Registration Test: success - Pricing Plan Option " + (i + 1));
+//                    webDriver.findElement(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")).click();
+//                } else if (webDriver.getCurrentUrl().equalsIgnoreCase("http://versionhistory.demo.zerp.info/admin/comp" + random + "name/projects")) {
+//                    System.out.println("Not An Email Registration Test: fail! - Pricing Plan Option " + (i + 1));
+//                }
+//            } catch (Exception ignored) {}
+//        }
+//    }
 
     @AfterTest(alwaysRun = true)
     public void setupAfterTest() {

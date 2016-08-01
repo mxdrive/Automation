@@ -25,9 +25,11 @@ public class Login_logout_positive {
         if (webDriver.getCurrentUrl().equalsIgnoreCase("http://versionhistory.demo.zerp.info/admin/company" + random + "/projects")) {
             webDriver.findElement(By.xpath(".//*[@id='container']/header/div/div/div/ul/li[4]/a")).click();
         } else if (webDriver.getCurrentUrl().equalsIgnoreCase("http://versionhistory.demo.zerp.info/login")) {
-            System.out.println("Registration: fail - User exists");
+            System.out.println("Login Test (registration): fail - User exists");
             new WebDriverWait(webDriver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")));
             webDriver.findElement(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")).click();
+        } else {
+            System.out.println("Login Test (registration): server error");
         }
 
         WebElement element = webDriver.findElement(By.id("email_signin"));

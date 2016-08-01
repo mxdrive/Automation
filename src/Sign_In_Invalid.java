@@ -31,6 +31,8 @@ public class Sign_In_Invalid {
             System.out.println("Empty Password Login Test: fail!");
         } else if (webDriver.getCurrentUrl().equalsIgnoreCase("http://versionhistory.demo.zerp.info/login")) {
             System.out.println("Empty Password Login Test: success");
+        } else {
+            System.out.println("Registration: server error");
         }
     }
 
@@ -44,6 +46,8 @@ public class Sign_In_Invalid {
         } else if (webDriver.getCurrentUrl().equalsIgnoreCase("http://versionhistory.demo.zerp.info/login")) {
             webDriver.get("http://versionhistory.demo.zerp.info/login");
             System.out.println("Deprecated Symbols Login Test: success");
+        } else {
+            System.out.println("Registration: server error");
         }
     }
 
