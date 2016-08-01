@@ -27,4 +27,10 @@
         </classes>
     </test>
 
+    <test name="Account Section Personal Info Test">
+        <classes>
+            <class name="Account_Section_Personal_Info" />
+        </classes>
+    </test>
+
 </suite>
