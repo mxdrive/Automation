@@ -34,11 +34,13 @@ public class Account_Section_Personal_Info {
             webDriver.findElement(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")).click();
         } else {
             System.out.println("Account Section Test (BeforeTest): server error");
+            System.exit(1);
         }
     }
 
     @Test
     void personalInformationPositive() {
+        webDriver.get("http://versionhistory.demo.zerp.info/admin/company" + random + "/projects");
         webDriver.findElement(By.xpath(".//*[@id='container']/header/div/div/div/ul/li[2]/a")).click();
         webDriver.findElement(By.xpath(".//*[@id='p_fname']")).sendKeys("FirstName");
         webDriver.findElement(By.xpath(".//*[@id='p_lname']")).sendKeys("LastName");
@@ -88,8 +90,9 @@ public class Account_Section_Personal_Info {
     void personalInformationLongStrings() {
         File txt = new File("/home/developer/txt.txt");
         String string = null;
+        String fieldName = null;
 
-        for (int i = 0; i <= 6; i++) {
+        for (int i = 0; i <= 4; i++) {
             webDriver.get("http://versionhistory.demo.zerp.info/admin/company" + random + "/projects");
             webDriver.findElement(By.xpath(".//*[@id='container']/header/div/div/div/ul/li[2]/a")).click();
             try {
@@ -113,11 +116,6 @@ public class Account_Section_Personal_Info {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if (webDriver.findElement(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")).isEnabled()) {
-                webDriver.findElement(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")).click();
-            } else if (webDriver.findElement(By.cssSelector("input:invalid")).isEnabled()){
-                webDriver.findElement(By.xpath(".//*[@id='p_password']")).click();
-            }
             webDriver.findElement(By.xpath(".//*[@id='p_password']")).sendKeys("123123123");
             webDriver.findElement(By.xpath(".//*[@id='p_password_confirmation']")).sendKeys("123123123");
             webDriver.findElement(By.xpath(".//*[@id='p_password_confirmation']")).submit();
@@ -126,24 +124,28 @@ public class Account_Section_Personal_Info {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if (webDriver.getPageSource().contains("The first name may not be greater than 255 characters")) {
-                webDriver.findElement(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")).click();
+            if (i == 0) {
+                fieldName = "First Name field";
+            } else if (i == 1) {
+                fieldName = "Last Name field";
+            } else if (i == 2) {
+                fieldName = "Company Name field";
+            } else if (i == 3) {
+                fieldName = "Phone Number field";
+            }  else if (i == 4) {
+                fieldName = "Email Address field";
             }
-//            if (webDriver.getCurrentUrl().equalsIgnoreCase("http://versionhistory.demo.zerp.info/admin/company" + random + "/projects")) {
-//                System.out.println("Registration Positive Test: fail!");
-//                webDriver.findElement(By.xpath(".//*[@id='container']/header/div/div/div/ul/li[4]/a")).click();
-//            } else if (webDriver.getCurrentUrl().equalsIgnoreCase("http://versionhistory.demo.zerp.info/login")) {
-//                System.out.println("Registration Positive Test: fail - User exists - Pricing Plan Option " + (i + 1));
-//                new WebDriverWait(webDriver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")));
-//                webDriver.findElement(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")).click();
-//            } else {
-//                System.out.println("Registration Positive Test: server error - Pricing Plan Option " + (i + 1));
-//            }
+            if (webDriver.getPageSource().contains("may not be greater than")) {
+                webDriver.findElement(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")).click();
+                System.out.println("Account Section Test (Personal Information Empty Fields): success - " + fieldName);
+            } else if (webDriver.getPageSource().contains("Personal Information was saved")){
+                System.out.println("Account Section Test (Personal Information Empty Fields): fail! - " + fieldName);
+            }
         }
     }
 
-//    @AfterTest(alwaysRun = true)
-//    public void setupAfterTest() {
-//        webDriver.quit();
-//    }
+    @AfterTest(alwaysRun = true)
+    public void setupAfterTest() {
+        webDriver.quit();
+    }
 }
