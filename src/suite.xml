@@ -33,4 +33,10 @@
         </classes>
     </test>
 
+    <test name="Account Section Communication Test">
+        <classes>
+            <class name="Account_Section_Communication" />
+        </classes>
+    </test>
+
 </suite>
