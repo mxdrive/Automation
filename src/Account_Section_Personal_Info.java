@@ -35,6 +35,7 @@ public class Account_Section_Personal_Info {
             System.out.println("Account Section Test (BeforeTest): fail - User exists");
             new WebDriverWait(webDriver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")));
             webDriver.findElement(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")).click();
+            Login();
         } else {
             System.out.println("Account Section Test (BeforeTest): server error");
             System.exit(1);
@@ -97,14 +98,18 @@ public class Account_Section_Personal_Info {
         String fieldName = null;
         WebElement invalidInput = null;
 
+        //выполняем в цикле для проверки всех полей, для которых эта проверка возможна
         for (int i = 0; i <= 4; i++) {
+            //переходим на страницу проектов
             webDriver.get("http://versionhistory.demo.zerp.info/admin/company" + random + "/projects");
             webDriver.findElement(By.xpath(".//*[@id='container']/header/div/div/div/ul/li[2]/a")).click();
+            //считываем файл, содержимое которого будем добавлять в поля
             try {
                 string = FileUtils.readFileToString(txt, "UTF-8");
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            //выбираем поле ввода
             if (i == 0) {
                 webDriver.findElement(By.xpath(".//*[@id='p_fname']")).sendKeys(string);
             } else if (i == 1) {
@@ -115,6 +120,7 @@ public class Account_Section_Personal_Info {
                 webDriver.findElement(By.xpath(".//*[@id='p_phone']")).sendKeys(string);
             } else if (i == 4){
                 webDriver.findElement(By.xpath(".//*[@id='p_email']")).sendKeys(string);
+                //присваиваем переменной элемент - попап браузера (если есть)
                 invalidInput = webDriver.findElement(By.cssSelector("input:invalid"));
             }
             try {
@@ -122,19 +128,20 @@ public class Account_Section_Personal_Info {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            //проверяем ранее присвоенное значение
             if (invalidInput != null) {
                 try {
                     Thread.sleep(7000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            } else if (webDriver.findElements(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")) == null){
+            } else if (webDriver.findElements(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")) == null){ //проверяем наличие окна ошибки ввода
                 try {
                     Thread.sleep(0);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            } else if (webDriver.findElements(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")).size() != 0){
+            } else if (webDriver.findElements(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")).size() != 0){ //проверяем наличие окна ошибки ввода
                 webDriver.findElement(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")).click();
             }
             webDriver.findElement(By.xpath(".//*[@id='p_password']")).sendKeys("123123123");
