@@ -1,6 +1,7 @@
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
@@ -9,6 +10,8 @@ import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
+
+import static com.sun.org.apache.xerces.internal.util.PropertyState.is;
 
 public class Account_Section_Personal_Info {
 
@@ -65,6 +68,7 @@ public class Account_Section_Personal_Info {
 
     @Test
     void personalInformationEmptyFields() {
+        webDriver.get("http://versionhistory.demo.zerp.info/admin/company" + random + "/projects");
         webDriver.findElement(By.xpath(".//*[@id='container']/header/div/div/div/ul/li[2]/a")).click();
         webDriver.findElement(By.xpath(".//*[@id='p_fname']")).clear();
         webDriver.findElement(By.xpath(".//*[@id='p_lname']")).clear();
@@ -91,6 +95,7 @@ public class Account_Section_Personal_Info {
         File txt = new File("/home/developer/txt.txt");
         String string = null;
         String fieldName = null;
+        WebElement invalidInput = null;
 
         for (int i = 0; i <= 4; i++) {
             webDriver.get("http://versionhistory.demo.zerp.info/admin/company" + random + "/projects");
@@ -98,7 +103,7 @@ public class Account_Section_Personal_Info {
             try {
                 string = FileUtils.readFileToString(txt, "UTF-8");
             } catch (IOException e) {
-               e.printStackTrace();
+                e.printStackTrace();
             }
             if (i == 0) {
                 webDriver.findElement(By.xpath(".//*[@id='p_fname']")).sendKeys(string);
@@ -110,11 +115,27 @@ public class Account_Section_Personal_Info {
                 webDriver.findElement(By.xpath(".//*[@id='p_phone']")).sendKeys(string);
             } else if (i == 4){
                 webDriver.findElement(By.xpath(".//*[@id='p_email']")).sendKeys(string);
+                invalidInput = webDriver.findElement(By.cssSelector("input:invalid"));
             }
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            }
+            if (invalidInput != null) {
+                try {
+                    Thread.sleep(7000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else if (webDriver.findElements(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")) == null){
+                try {
+                    Thread.sleep(0);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else if (webDriver.findElements(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")).size() != 0){
+                webDriver.findElement(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")).click();
             }
             webDriver.findElement(By.xpath(".//*[@id='p_password']")).sendKeys("123123123");
             webDriver.findElement(By.xpath(".//*[@id='p_password_confirmation']")).sendKeys("123123123");
@@ -137,9 +158,9 @@ public class Account_Section_Personal_Info {
             }
             if (webDriver.getPageSource().contains("may not be greater than")) {
                 webDriver.findElement(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")).click();
-                System.out.println("Account Section Test (Personal Information Empty Fields): success - " + fieldName);
+                System.out.println("Account Section Test (Personal Information Long Fields): success - " + fieldName);
             } else if (webDriver.getPageSource().contains("Personal Information was saved")){
-                System.out.println("Account Section Test (Personal Information Empty Fields): fail! - " + fieldName);
+                System.out.println("Account Section Test (Personal Information Long Fields): fail! - " + fieldName);
             }
         }
     }
