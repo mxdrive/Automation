@@ -51,24 +51,25 @@ public class Login_logout_positive {
         System.out.println("Logout Test: success");
     }
 
-//    @org.testng.annotations.Test
-//    public void accountCancel() {
-////        webDriver.get("http://versionhistory.demo.zerp.info/admin/company/account");
-//        login();
-//        WebElement element = webDriver.findElement(By.className("cancel_account"));
-//        element.click();
-//        WebElement element1 = webDriver.findElement(By.className("btn-danger"));
-//        element1.click();
-//
-//        new WebDriverWait(webDriver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath(".//*[@id='AccountCancel']/div/div/form/div[2]/input[1]")));
-//        webDriver.findElement(By.xpath(".//*[@id='AccountCancel']/div/div/form/div[2]/input[1]")).click();
-//
-//        new WebDriverWait(webDriver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath(".//*[@id='statusModal']/div/div/div[3]/button")));
-//        webDriver.findElement(By.xpath(".//*[@id='statusModal']/div/div/div[3]/button")).click();
-//        if (webDriver.getCurrentUrl().equalsIgnoreCase("http://versionhistory.demo.zerp.info/login")) {
-//            System.out.println("Account Cancel Test: success");
-//        }
-//    }
+    @org.testng.annotations.Test
+    public void accountCancel() {
+//        webDriver.get("http://versionhistory.demo.zerp.info/admin/company/account");
+        login();
+        webDriver.findElement(By.xpath(".//*[@id='container']/header/div/div/div/ul/li[2]/a")).click();
+        WebElement element = webDriver.findElement(By.className("cancel_account"));
+        element.click();
+        WebElement element1 = webDriver.findElement(By.className("btn-danger"));
+        element1.click();
+
+        new WebDriverWait(webDriver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath(".//*[@id='AccountCancel']/div/div/form/div[2]/input[1]")));
+        webDriver.findElement(By.xpath(".//*[@id='AccountCancel']/div/div/form/div[2]/input[1]")).click();
+
+        new WebDriverWait(webDriver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath(".//*[@id='statusModal']/div/div/div[3]/button")));
+        webDriver.findElement(By.xpath(".//*[@id='statusModal']/div/div/div[3]/button")).click();
+        if (webDriver.getCurrentUrl().equalsIgnoreCase("http://versionhistory.demo.zerp.info/login")) {
+            System.out.println("Account Cancel Test: success");
+        }
+    }
 
     @AfterTest(alwaysRun = true)
     public void setupAfterTest() {

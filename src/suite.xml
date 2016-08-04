@@ -39,4 +39,10 @@
         </classes>
     </test>
 
+    <test name="Account Section User Accounts Test">
+        <classes>
+            <class name="Account_Section_User_Accounts" />
+        </classes>
+    </test>
+
 </suite>
