@@ -36,6 +36,12 @@ public class Account_Section_User_Accounts {
     @Test
     void changeEmailPositive() {
         random = min + (int)(Math.random() * ((max - min) + 1));
+//        webDriver.get("http://versionhistory.demo.zerp.info/admin/company" + random + "/projects");
+        if (webDriver.getCurrentUrl().equalsIgnoreCase("http://versionhistory.demo.zerp.info/login#user_account")) {
+            Login();
+        } else {
+            webDriver.get("http://versionhistory.demo.zerp.info/admin/company" + random + "/projects");
+        }
         webDriver.findElement(By.xpath(".//*[@id='container']/header/div/div/div/ul/li[2]/a")).click();
         webDriver.findElement(By.xpath(".//*[@id='main-content']/section/div/div/div/div[1]/div[1]/h3")).click();
         webDriver.findElement(By.xpath(".//*[@id='main-content']/section/div/div/div/div[1]/div[2]/div/div/table/tbody/tr/td[2]/form/a")).click();
@@ -56,6 +62,7 @@ public class Account_Section_User_Accounts {
 
     @Test
     void deleteAccount() {
+        webDriver.get("http://versionhistory.demo.zerp.info/admin/company" + random + "/projects");
         webDriver.findElement(By.xpath(".//*[@id='container']/header/div/div/div/ul/li[2]/a")).click();
         webDriver.findElement(By.xpath(".//*[@id='main-content']/section/div/div/div/div[1]/div[1]/h3")).click();
         webDriver.findElement(By.xpath(".//*[@id='main-content']/section/div/div/div/div[1]/div[2]/div/div/table/tbody/tr/td[2]/a")).click();
@@ -68,12 +75,17 @@ public class Account_Section_User_Accounts {
 
     @Test
     void userAccountAdd() {
-
+//        webDriver.get("http://versionhistory.demo.zerp.info/admin/company" + random + "/projects");
+        if (webDriver.getCurrentUrl().equalsIgnoreCase("http://versionhistory.demo.zerp.info/login#user_account")) {
+            Login();
+        } else {
+            webDriver.get("http://versionhistory.demo.zerp.info/admin/company" + random + "/projects");
+        }
         webDriver.findElement(By.xpath(".//*[@id='container']/header/div/div/div/ul/li[2]/a")).click();
         webDriver.findElement(By.xpath(".//*[@id='main-content']/section/div/div/div/div[1]/div[1]/h3")).click();
         webDriver.findElement(By.xpath(".//*[@id='iuaEmailAddress']")).clear();
-//        webDriver.findElement(By.xpath(".//*[@id='iuaEmailAddress']")).sendKeys("user" + random + "@user" + random + ".us");
-        webDriver.findElement(By.xpath(".//*[@id='iuaEmailAddress']")).sendKeys("user@user111.user");
+        webDriver.findElement(By.xpath(".//*[@id='iuaEmailAddress']")).sendKeys("user" + random + "@user" + random + ".us");
+//        webDriver.findElement(By.xpath(".//*[@id='iuaEmailAddress']")).sendKeys("user@user111.user");
         webDriver.findElement(By.xpath(".//*[@id='iuaPassword']")).sendKeys("123123123");
         webDriver.findElement(By.xpath(".//*[@id='iuaPassword']")).submit();
         try {
