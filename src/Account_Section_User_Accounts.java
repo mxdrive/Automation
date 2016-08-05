@@ -1,3 +1,5 @@
+import io.codearte.jfairy.Fairy;
+import io.codearte.jfairy.producer.person.Person;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -11,18 +13,24 @@ public class Account_Section_User_Accounts {
     int min = 0;
     int max = 9999;
     int random;
+    Fairy fairy = Fairy.create();
+    Person person = fairy.person();
 
     @BeforeTest
     void Login() {
 
         random = min + (int)(Math.random() * ((max - min) + 1));
         webDriver.get("http://versionhistory.demo.zerp.info/login");
-        webDriver.findElement(By.id("email_signup")).sendKeys("user@us" + random + "er.user");
-        webDriver.findElement(By.id("username_signup")).sendKeys("Company" + random);
-        webDriver.findElement(By.id("password_signup")).sendKeys("123123123");
-        webDriver.findElement(By.id("password_confirmation")).sendKeys("123123123");
+//        webDriver.findElement(By.id("email_signup")).sendKeys("user@us" + random + "er.user");
+        webDriver.findElement(By.id("email_signup")).sendKeys(person.email());
+//        webDriver.findElement(By.id("username_signup")).sendKeys("Company" + random);
+        webDriver.findElement(By.id("username_signup")).sendKeys(person.getCompany().name());
+//        webDriver.findElement(By.id("password_signup")).sendKeys("123123123");
+        webDriver.findElement(By.id("password_signup")).sendKeys(person.password());
+//        webDriver.findElement(By.id("password_confirmation")).sendKeys("123123123");
+        webDriver.findElement(By.id("password_confirmation")).sendKeys(person.password());
         webDriver.findElement(By.className("btn")).click();
-        if (webDriver.getCurrentUrl().equalsIgnoreCase("http://versionhistory.demo.zerp.info/admin/company" + random + "/projects")) {
+        if (webDriver.getCurrentUrl().equalsIgnoreCase("http://versionhistory.demo.zerp.info/admin/company" + person.getCompany().name() + "/projects")) {
         } else if (webDriver.getCurrentUrl().equalsIgnoreCase("http://versionhistory.demo.zerp.info/login")) {
             System.out.println("Account Section Test (BeforeTest): fail - User exists");
             new WebDriverWait(webDriver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")));
@@ -40,7 +48,7 @@ public class Account_Section_User_Accounts {
         if (webDriver.getCurrentUrl().equalsIgnoreCase("http://versionhistory.demo.zerp.info/login#user_account")) {
             Login();
         } else {
-            webDriver.get("http://versionhistory.demo.zerp.info/admin/company" + random + "/projects");
+            webDriver.get("http://versionhistory.demo.zerp.info/admin/company" + person.getCompany().name() + "/projects");
         }
         webDriver.findElement(By.xpath(".//*[@id='container']/header/div/div/div/ul/li[2]/a")).click();
         webDriver.findElement(By.xpath(".//*[@id='main-content']/section/div/div/div/div[1]/div[1]/h3")).click();
