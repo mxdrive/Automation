@@ -2,6 +2,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -36,6 +37,7 @@ public class Account_Section_User_Accounts {
     @Test
     void changeEmailPositive() {
         random = min + (int)(Math.random() * ((max - min) + 1));
+        webDriver.get("http://versionhistory.demo.zerp.info/admin/company" + random + "/projects");
         webDriver.findElement(By.xpath(".//*[@id='container']/header/div/div/div/ul/li[2]/a")).click();
         webDriver.findElement(By.xpath(".//*[@id='main-content']/section/div/div/div/div[1]/div[1]/h3")).click();
         webDriver.findElement(By.xpath(".//*[@id='main-content']/section/div/div/div/div[1]/div[2]/div/div/table/tbody/tr/td[2]/form/a")).click();
@@ -56,6 +58,7 @@ public class Account_Section_User_Accounts {
 
     @Test
     void deleteAccount() {
+        webDriver.get("http://versionhistory.demo.zerp.info/admin/company" + random + "/projects");
         webDriver.findElement(By.xpath(".//*[@id='container']/header/div/div/div/ul/li[2]/a")).click();
         webDriver.findElement(By.xpath(".//*[@id='main-content']/section/div/div/div/div[1]/div[1]/h3")).click();
         webDriver.findElement(By.xpath(".//*[@id='main-content']/section/div/div/div/div[1]/div[2]/div/div/table/tbody/tr/td[2]/a")).click();
@@ -67,27 +70,25 @@ public class Account_Section_User_Accounts {
     }
 
     @Test
-    void userAccountAdd() {
-
+    void userAccountAdd() throws InterruptedException {
+        if (webDriver.getCurrentUrl().equalsIgnoreCase("http://versionhistory.demo.zerp.info/login#user_account")) {
+            Login();
+        }
         webDriver.findElement(By.xpath(".//*[@id='container']/header/div/div/div/ul/li[2]/a")).click();
         webDriver.findElement(By.xpath(".//*[@id='main-content']/section/div/div/div/div[1]/div[1]/h3")).click();
         webDriver.findElement(By.xpath(".//*[@id='iuaEmailAddress']")).clear();
-//        webDriver.findElement(By.xpath(".//*[@id='iuaEmailAddress']")).sendKeys("user" + random + "@user" + random + ".us");
-        webDriver.findElement(By.xpath(".//*[@id='iuaEmailAddress']")).sendKeys("user@user111.user");
+        webDriver.findElement(By.xpath(".//*[@id='iuaEmailAddress']")).sendKeys("user" + random + "@user" + random + ".us");
         webDriver.findElement(By.xpath(".//*[@id='iuaPassword']")).sendKeys("123123123");
         webDriver.findElement(By.xpath(".//*[@id='iuaPassword']")).submit();
         try {
             new WebDriverWait(webDriver, 3).until(ExpectedConditions.elementToBeClickable(By.xpath(".//*[@id='statusModal']/div/div/div[3]/button")));
+            webDriver.findElement(By.xpath(".//*[@id='statusModal']/div/div/div[3]/button")).click();
+            System.out.println("Account Section Test (User Accounts section - deleteAccount): success");
         } catch (Exception e) {
             e.printStackTrace();
             webDriver.findElement(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")).click();
             System.out.println("Account Section Test (User Accounts section - deleteAccount): email has been taken");
-        }
-        if (webDriver.findElement(By.xpath(".//*[@id='statusModal']/div/div/div[3]/button")).isDisplayed()) {
-            webDriver.findElement(By.xpath(".//*[@id='statusModal']/div/div/div[3]/button")).click();
-            System.out.println("Account Section Test (User Accounts section - deleteAccount): success");
-        } else {
-            webDriver.findElement(By.xpath(".//*[@id='errorModal']/div/div/div[3]/button")).click();
+            Thread.sleep(2000);
             userAccountAdd();
         }
     }
